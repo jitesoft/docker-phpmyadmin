@@ -12,7 +12,7 @@ RUN apk add --no-cache wget \
     && cd /phpmyadmin \
     && rm -rf setup examples test po composer.json RELESE-DATE-{VERSION} \
     && mkdir /phpmyadmin/config \
-    && sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/phpmyadmin/config');@" /phpmyadmin/libraries/vendor_config.php \
+    && sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/phpmyadmin/config/');@" /phpmyadmin/libraries/vendor_config.php \
     && mkdir /sessions \
     && apk del --no-cache wget
 
