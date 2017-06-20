@@ -11,13 +11,13 @@ RUN apk add --no-cache wget \
     && mv /tmp/phpMyAdmin-${VERSION}-all-languages /phpmyadmin \
     && cd /phpmyadmin \
     && rm -rf setup examples test po composer.json RELESE-DATE-{VERSION} \
-    && mkdir /phpmyadmin/config \
     && sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/phpmyadmin/config/');@" /phpmyadmin/libraries/vendor_config.php \
+    && mkdir /phpmyadmin/config \
     && mkdir /sessions \
     && apk del --no-cache wget
 
-ADD ./includes /etc/phpmyadmin
-RUN cp /etc/phpmyadmin/config.inc.php /phpmyadmin/config/config.inc.php
+ADD ./init.sh /init.sh
+ADD ./config.php /etc/phpmyadmin/config.php
 VOLUME [ "/phpmyadmin" ]
 
-CMD [ "/bin/ash", "-C", "/etc/phpmyadmin/init.sh" ]
+CMD [ "/bin/ash", "-C", "/init.sh" ]
