@@ -2,7 +2,10 @@
 
 Data container for phpmyadmin using arbitrary hosts only as of now.  
 Supposed to be running with external nginx/fpm containers.  
-I would recommend persisting the `/phpmyadmin/config` folder with a data volume (as in example below), or the container will re-generate the blowfish secret on each restart (if that is a issue for you).
+
+Configuration files are stored in the `/config` folder, it's a good idea to persist this folder so that the blowfish secret is not re-generated on each restart. In the example below I use a named volume to persist the `/config` dir.  
+The configuration will look for a `config.user.inc.php` file in the `/config` dir and if it finds it, it will load it, that way one can override the default settings with a new configuration.  
+
 
 Example docker-compose file:
 
@@ -19,7 +22,7 @@ services:
   pmadata:
     image: jitesoft/phpmyadmin:latest
     volumes:
-      - pma-persist:/phpmyadmin/config
+      - pma-persist:/config
 
   nginx:
     image: nginx
